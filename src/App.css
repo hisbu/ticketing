@@ -31,3 +31,69 @@
     transform: rotate(360deg);
   }
 }
+
+body{
+  background-color: #f3f3f4;
+}
+
+.mycard{
+  background-color: #fff;
+}
+
+.mycard img{
+  border-bottom: 3px solid #4ec697
+}
+
+.duration{
+  height: 40px;
+  width: 40px;
+  background-color: #4ec697;
+  border-radius: 40px;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  color: #fff;
+  font-size: 12px;
+  font-weight: bold;
+  
+  
+}
+
+.duration p{
+ position: absolute;
+ top: 50%;
+ left: 50%;
+ transform: translate(-50%, -50%);
+}
+
+.duration span{
+  font-size: 10px;
+  font-weight: unset;
+  margin-top: -15px;
+}
+
+.filmTitle{
+  margin: 10px 15px 10px 15px;
+  font-size: 16px;
+  color: #333;
+  margin-bottom: 30px;
+}
+
+.genre{
+  height: 17px;
+  border-radius: 17px;
+  font-size: 9px;
+  color: #999;
+  background-color: #f4f4f4f4;
+  position: absolute;
+  left: 10px;
+  bottom: 10px;
+  padding: 10px;
+}
+
+.genre p{
+  position: relative;
+ top: 50%;
+ left: 50%;
+ transform: translate(-50%, -50%);
+}
