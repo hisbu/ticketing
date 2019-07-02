@@ -26,10 +26,11 @@ class MovieList extends React.Component{
     printMovie = () => {
         var jsx = this.state.data.map((val) => {
             return(
-                <div className="col-md-3 mycard p-0 pb-3 ml-2 mr-2 mb-3">
+                <div className="col-md-3 mycard p-0 pb-3 ml-2 mb-3">
                         <img src={val.image} alt="" width="100%"/>
-                        <div className="duration"><p>{val.duration}m</p></div>
+                        <div className="duration"><p>{val.duration}<span>min</span></p></div>
                         <div className="filmTitle">{val.title} </div>
+                        <civ className="sutradara">{val.sutradara}</civ>
                         <div className="genre"><p>{val.title}</p></div>
                     </div>
 
