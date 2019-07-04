@@ -119,13 +119,25 @@ body{
 }
 
 .content{
-  width: 90%;
-  height: 400px;
+  /* width: 90%;
+  height: 400px; */
   /* background-color: #666; */
-  border: 1px solid red;
+  /* border: 1px solid red; */
   position: absolute;
   top: 300px;
+  left: 50%;
+  transform: translate(-50%, 0%);
   z-index: 100;
+}
+
+.imgDetail{
+  padding: 0px;
+  margin: 0px;
+}
+
+.imageDetail img{
+  height: 100%;
+  width: 100%;
 }
 
 .kotak{
@@ -162,4 +174,165 @@ body{
 }
 .genreDetailDiv{
   margin-top: 10px
+}
+.timeDetail{
+  font-size: 14px;
+  color: white;
+  margin-top: 10px;
+}
+
+.voteDetail{
+  width: 700px;
+  height: 54px;
+  margin-top: 40px;
+}
+
+.thumbsContainer{
+  width: 83px;
+  height: 54px;
+}
+
+.thumbsDetail{
+  font-size: 24px;
+  color:#5fbb8e;
+}
+.thumbsDetail span{
+  color: #333;
+  font-weight: bold;
+  margin-left: 5px;
+}
+
+.voteSUm{
+  font-size: 11px;
+  color: #999;
+}
+
+.will{
+  height: 33px;
+  width: fit-content;
+  padding: 6px 15px;
+  border: 1px solid #5fbb8e;
+  border-radius: 3px;
+  color: #5fbb8e;
+  font-size: 11px;
+  font-weight: bold;
+ 
+  
+}
+
+.will:hover{
+  background-color: #5fbb8e;
+  color: white;
+}
+
+.maybe{
+  height: 33px;
+  width: fit-content;
+  padding: 6px 15px;
+  border: 1px solid #f2a636;
+  border-radius: 3px;
+  color: #f2a636;
+  font-size: 11px;
+  font-weight: bold;
+  
+  
+}
+
+.maybe:hover{
+  background-color: #f2a636;
+  color: white;
+}
+
+.wont{
+  height: 33px;
+  width: fit-content;
+  padding: 6px 15px;
+  border: 1px solid #c03239;
+  border-radius: 3px;
+  color: #c03239;
+  font-size: 11px;
+  font-weight: bold;
+  
+  
+}
+
+.wont:hover{
+  background-color: #c03239;
+  color: white;
+}
+
+.buy{
+  height: 33px;
+  width: 100%;
+  padding: 6px 15px;
+  border: 1px solid blue;
+  border-radius: 3px;
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+  background-color:#007aff;
+  
+  
+}
+
+.buy:hover{
+  background-color: blue;
+  color: white;
+}
+
+.tabsDetail{
+  height: 46px;
+  /* width: 700px; */
+  margin-top: 20px;
+  border-bottom: thin solid #c2c2c2;
+}
+
+.liTabs{
+  height: 46;
+  width: fit-content;
+  padding: 12px 8px 12px 0px;
+  color: #333;
+  font-size: 14px;
+  font-weight: bold;
+  margin-right: 25px;
+
+}
+
+.liTabs:hover{
+  border-bottom: 2px solid #5fbb8e;
+}
+
+.imageDetail{
+  border-bottom: 2px solid 5fbb8e;
+}
+
+.imageDetail img{
+  height: 341px;
+}
+
+.contentTitle{
+  margin-top:20px;
+  font-size: 14px;
+  color: #333;
+  font-weight: bold;
+  width: 700px;
+}
+
+.textDetail{
+  margin-top: 15px;
+  font-size: 14px;
+  color: #666;
+  width: 700px;
+}
+
+.sutradaraDetail{
+  margin-top:10px;
+  font-size: 12px;
+  font-weight: 700;
+  color:#666;
+}
+
+.foother{
+  margin-top: 150px;
 }

@@ -3,14 +3,22 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
 import 'bootstrap/dist/css/bootstrap.min.css'
+import 'react-modal-video/scss/modal-video.scss'
 import App from './App';
 import { BrowserRouter } from 'react-router-dom'
+import { createStore } from 'redux'
+import { Provider } from 'react-redux'
+import Reducer from './redux/reducers'
 
+
+const bebas = createStore(Reducer)
 
 ReactDOM.render(
-    <BrowserRouter>
-        <App />
-    </BrowserRouter>
+    <Provider store={bebas}>
+        <BrowserRouter>
+            <App />
+        </BrowserRouter>
+    </Provider>
     , document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
