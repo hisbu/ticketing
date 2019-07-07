@@ -4,6 +4,7 @@ import './index.css';
 import * as serviceWorker from './serviceWorker';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'react-modal-video/scss/modal-video.scss'
+// import 'materialize-css/sass/materialize.scss'
 import App from './App';
 import { BrowserRouter } from 'react-router-dom'
 import { createStore } from 'redux'

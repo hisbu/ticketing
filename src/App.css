@@ -43,11 +43,53 @@ body{
   box-shadow: 5px 5px 5px 0px rgba(196,196,196,0.64);
 }
 
-.mycard img{
+.movieImage{
   border-bottom: 3px solid #4ec697;
   height: 410px;
+  display: block;
   
 }
+
+.playbutton{
+  position: absolute;
+  height: 410px;
+  width: 0;
+  left: 0;
+  top:0;
+  /* right: 0; */
+  /* bottom: 0; */
+  overflow: hidden;
+  
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  opacity: 0.6;
+  background-color: black;
+  font-size: 40px;
+  transition: .5s ease;
+  color: white;
+  
+  /* color: red; */
+}
+.mycard:hover .playbutton{
+  /* left: 0; */
+  height: 410px;
+  width: 100%;
+  top: 0;
+  /* color:red; */
+  /* opacity: 0.4; */
+}
+
+/* .playbutton{
+  display: none;
+} */
+
+.playIcon:hover{
+  color:red;
+  cursor: pointer;
+}
+
 
 .duration{
   height: 40px;
@@ -182,8 +224,8 @@ body{
 }
 
 .voteDetail{
-  width: 700px;
-  height: 54px;
+  /* width: 700px; */
+  /* height: 54px; */
   margin-top: 40px;
 }
 
@@ -208,7 +250,7 @@ body{
 }
 
 .will{
-  height: 33px;
+  height: fit-content;
   width: fit-content;
   padding: 6px 15px;
   border: 1px solid #5fbb8e;
@@ -216,7 +258,7 @@ body{
   color: #5fbb8e;
   font-size: 11px;
   font-weight: bold;
- 
+  text-align: center
   
 }
 
@@ -226,7 +268,7 @@ body{
 }
 
 .maybe{
-  height: 33px;
+  height: fit-content;
   width: fit-content;
   padding: 6px 15px;
   border: 1px solid #f2a636;
@@ -234,7 +276,7 @@ body{
   color: #f2a636;
   font-size: 11px;
   font-weight: bold;
-  
+  text-align: center
   
 }
 
@@ -244,7 +286,7 @@ body{
 }
 
 .wont{
-  height: 33px;
+  height: fit-content;
   width: fit-content;
   padding: 6px 15px;
   border: 1px solid #c03239;
@@ -252,7 +294,7 @@ body{
   color: #c03239;
   font-size: 11px;
   font-weight: bold;
-  
+  text-align: center
   
 }
 
@@ -335,4 +377,52 @@ body{
 
 .foother{
   margin-top: 150px;
+}
+
+.playVideo{
+  width: 100%;
+  height: 400px;
+  position: absolute;
+  top:54px;
+  z-index: 2;
+  text-align: center;
+  align-content: center;
+  background: transparent;
+  cursor: pointer;
+}
+
+.menuHeader{
+  color: white;
+  font-style: unset;
+}
+
+.menuHeader:hover{
+  width: 100%;
+}
+
+.nestedList{
+  padding-left: 30px;
+  margin-left: 30px;
+  background-color: green;
+}
+
+.banner{
+  width: 100%;
+  height: 500px;
+  overflow: hidden;
+}
+
+.banner img{
+  height: 100%;
+}
+
+.footer{
+  background-color: #282c34;
+  color: #fff;
+  
+}
+
+.all100{
+  width: 100%;
+  height: 50%;
 }

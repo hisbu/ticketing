@@ -9,7 +9,9 @@ class ManageMovie extends React.Component{
     state = {
         data : [],
         modalOpen: false,
-        selectedEdit: 0
+        selectedEdit: 0,
+        more : false,
+        idMovie:null
     }
     componentDidMount(){
         Axios.get('http://localhost:2000/movies')
@@ -22,15 +24,33 @@ class ManageMovie extends React.Component{
     }
 
     //function
-    RenderSinopsis = (text) => {
-        var arr = text.split(' ')
-        var newArr = []
-        for(var i = 0; i< 5; i++){
-            newArr.push(arr[i])
-        }
+    RenderSinopsis = (text, id) => {
+        // var arr = text.split(' ')
+        // var newArr = []
+        // for(var i = 0; i< 4; i++){
+        //     newArr.push(arr[i])
+        // }
 
-        // console.log(newArr)
-        return newArr.join(' ')
+        // // console.log(newArr)
+        // return newArr.join(' ')
+
+
+        
+            // if(this.state.more === false){
+            //     return(
+            //     <TableCell>
+            //     {text.split(' ').splice(0,4).join(' ')} <span onClick={()=> this.setState({more: true})}>... More</span>
+            //     </TableCell>
+
+            //     )
+
+            // }return(
+            // <TableCell>
+            // {text}<span onClick={()=> this.setState({more: false})}>... Less</span>>
+            // </TableCell>
+
+            // )
+            
     }
 
     onBtnEditClick = (id) => {
@@ -46,6 +66,7 @@ class ManageMovie extends React.Component{
         var playingAt = this.refs.input5.value.split(',')
         var duration = this.refs.input6.value
         var synopsis = this.refs.input7.value
+        var thriller = this.refs.input8.value
         if(title !== '' && sutradara!=='' && genre !== '' && synopsis !== '' && duration !=='' && image !=='' && playingAt!=='' ){
             var objdata={
                 title: title,
@@ -54,24 +75,14 @@ class ManageMovie extends React.Component{
                 playingAt: playingAt,
                 duration: duration,
                 sutradara: sutradara,
-                image: image
+                image: image,
+                thriller: thriller
             }
             Axios.put('http://localhost:2000/movies/'+this.state.selectedEdit, objdata)
             .then((res)=>{
                 alert('data berhasil diupdate')
                 var movieData = this.state.data
-                // console.log(movieData[this.state.selectedEdit-1])
-                // console.log(movieData[id])
-                // console.log(movieData[index])
                 movieData[index] = objdata
-                // movieData[index].title = title
-                // movieData[index].genre = genre
-                // movieData[index].sutradara = sutradara
-                // movieData[index].synopsis = synopsis
-                // movieData[index].duration = duration
-                // movieData[index].playingAt = playingAt
-                // movieData[index].image = image
-                // console.log(movieData)
                 this.setState({data: movieData, selectedEdit: 0})
             })
             .catch((err)=>{
@@ -94,7 +105,8 @@ class ManageMovie extends React.Component{
                     <TableCell><input ref='input4'  className='form-control' type='text' defaultValue={val.sutradara}/></TableCell>
                     <TableCell><input ref='input5'  className='form-control' type='text' defaultValue={val.playingAt.join(',')}/></TableCell>
                     <TableCell><input ref='input6'  className='form-control' type='text' defaultValue={val.duration}/></TableCell>
-                    <TableCell><textarea ref='input7'  className='form-control' defaultValue={this.RenderSinopsis(val.synopsis)}/>...</TableCell>
+                    <TableCell><textarea ref='input7'  className='form-control' defaultValue={val.synopsis}/></TableCell>
+                    <TableCell><input ref='input8' className='form-control' type='text' defaultValue={val.thriller}/></TableCell>
                     <TableCell><Check onClick={() => this.onBtnUpdateClick(val.id, index)}/></TableCell>
                     <TableCell><CancelOutlined onClick={()=>this.setState({selectedEdit: 0})}/></TableCell>
                 </TableRow>
@@ -102,7 +114,7 @@ class ManageMovie extends React.Component{
                 )
             }
             return(
-                <TableRow>
+                <TableRow >
                     <TableCell>{val.id}</TableCell>
                     <TableCell><img src={val.image} alt="" height="100px"/></TableCell>
                     <TableCell>{val.title}</TableCell>
@@ -110,7 +122,20 @@ class ManageMovie extends React.Component{
                     <TableCell>{val.sutradara}</TableCell>
                     <TableCell>{val.playingAt.join(',')}</TableCell>
                     <TableCell>{val.duration}</TableCell>
-                    <TableCell>{this.RenderSinopsis(val.synopsis)+'...'}</TableCell>
+                    {/* {this.RenderSinopsis(val.synopsis)+'...'} */}
+                    {/* <TableCell>{val.synopsis.split(' ').splice(0,4).join(' ')+'...'}</TableCell> */}
+                        {
+                        this.state.more === true && this.state.idMovie === val.id
+                        ?
+                        <TableCell>
+                        {val.synopsis}<span onClick={()=> this.setState({more: false, idMovie: val.id})} style={{color:'blue', cursor:'pointer'}}>... [Less]</span>
+                        </TableCell>
+                        :
+                        <TableCell>
+                        {val.synopsis.split(' ').splice(0,4).join(' ')} <span onClick={()=> this.setState({more: true, idMovie: val.id})} style={{color:'blue', cursor:'pointer'}}>... [More]</span>
+                        </TableCell>
+                        }
+                    <TableCell>{val.thriller}</TableCell>
                     <TableCell><EditOutlined onClick={() => this.onBtnEditClick(val.id, index)}/></TableCell>
                     <TableCell><DeleteOutline onClick={() => this.onBtnDeleteClick(val.id, index)}/></TableCell>
                 </TableRow>
@@ -159,6 +184,7 @@ class ManageMovie extends React.Component{
         var image = this.refs.image.value
         var duration = this.refs.duration.value
         var sinopsis = this.refs.sinopsis.value
+        var thriller = this.refs.thriller.value
         
 
         var data = {
@@ -169,6 +195,7 @@ class ManageMovie extends React.Component{
             duration: duration,
             sutradara: sutradara,
             image: image,
+            thriller: thriller
         }
 
         if(title !== '' && sutradara!=='' && genre !== '' && sinopsis !== '' && duration >0 && image !=='' && playingAt.length > 0 ){
@@ -207,9 +234,10 @@ class ManageMovie extends React.Component{
     render(){
         
         return(
-            <Container fixed>
+            <div>
+            {/* <Container fixed> */}
                 <center><h1>Manage Movie</h1></center>
-                <input type="Button" className="btn btn-success mb-3" value="Add Data" onClick={()=> this.setState({modalOpen: true})}/>
+                <input type="Button" className="btn btn-success ml-3" value="Add Data" onClick={()=> this.setState({modalOpen: true})}/>
                 
                 {/*<MODAL START*/}
                 <Modal isOpen={this.state.modalOpen} toggle={this.closeModal}>
@@ -257,6 +285,7 @@ class ManageMovie extends React.Component{
                         </div>
                         <input type='number' className='form-control mt-2' placeholder='Duration' ref='duration'/>
                         <textarea className='form-control mt-2' placeholder='Sinopsis' ref='sinopsis'/>
+                        <input type='text' className='form-control mt-2' placeholder='video id youtube' ref='youtube'/>
                     </ModalBody>
                     <ModalFooter>
                         <input type='Button' value='cancel' onClick={this.closeModal} className='btn btn-danger'/>
@@ -264,10 +293,10 @@ class ManageMovie extends React.Component{
                     </ModalFooter>
                 </Modal>
                 {/*<MODAL END*/}
-                <Paper>
-                    <Table>
+                <Paper className='m-3 p-3'>
+                    <Table >
                         <TableHead>
-                            <TableCell>No</TableCell>
+                            <TableCell >No</TableCell>
                             <TableCell>Image</TableCell>
                             <TableCell>Title</TableCell>
                             <TableCell>Genre</TableCell>
@@ -275,7 +304,8 @@ class ManageMovie extends React.Component{
                             <TableCell>PlayingAt</TableCell>
                             <TableCell>Duration</TableCell>
                             <TableCell>Sinopsis</TableCell>
-                            <TableCell colSpan="2">Action</TableCell>
+                            <TableCell>Youtube Id</TableCell>
+                            <TableCell colSpan="2" style={{textAlign:'center'}}>Action</TableCell>
                         </TableHead>
                         <TableBody>
                             {this.renderDataToJsx()}
@@ -283,7 +313,8 @@ class ManageMovie extends React.Component{
                         </TableBody>
                     </Table>
                 </Paper>
-            </Container>
+            {/* </Container> */}
+            </div>
         )
     }
 }
