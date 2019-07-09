@@ -9,11 +9,35 @@ import MovieDetail from './pages/movieDetail'
 import ManageMovie from './pages/admin/manageMovie'
 import Register from './pages/register'
 import LoginPage from './pages/login'
+import Reservation from './pages/seatReservation'
 import FilterList from './components/filterList'
 import Filter from './components/filter'
+import Axios from 'axios';
+import {ApiUrl} from './support/urlApi'
+import { OnRegisterSuccess } from './redux/actions'
+import { connect } from 'react-redux'
 
 class App extends React.Component {
+
+  componentDidMount(){
+    var username = localStorage.getItem('userLogin')
+    if(username !== null){
+      Axios.get(ApiUrl+'/user?username='+ username)
+      .then((res) => {
+        console.log(res.data)
+        this.props.OnRegisterSuccess(res.data[0])
+      })
+      .catch((err)=>{
+        console.log(err)
+      })
+    }
+  }
   render(){
+    // if(this.props.user === '' && localStorage.get('userLogin')!== null){
+    //   return(
+    //     <p>loading</p>
+    //   )
+    // }
     return (
       <div>
         <Header/>
@@ -24,6 +48,7 @@ class App extends React.Component {
         <Route path='/login' component={LoginPage}/>
         <Route path='/filterList' component={FilterList}/>
         <Route path='/filter' component={Filter}/>
+        <Route path='/reservation' component={Reservation}/>
         {/* <Footer/> */}
       </div>
     );
@@ -31,4 +56,11 @@ class App extends React.Component {
 
   }
 
-export default App;
+  const mapStateToProps  = (state) =>{
+    return{
+      user : state.user.username
+    }
+  }
+
+
+export default connect(mapStateToProps, {OnRegisterSuccess}) (App);

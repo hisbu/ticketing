@@ -34,7 +34,7 @@ class MovieDetail extends React.Component{
     }
 
     onBuyTicketClick =()=>{
-        // alert(this.props.user.id)
+        alert(this.props.user.id)
         if(this.props.user.id===0){
             this.setState({userLogin:false})
         }
@@ -48,6 +48,11 @@ class MovieDetail extends React.Component{
 
             )
         }
+        // else if(this.state.userLogin === true){
+        //     return(
+        //         <Redirect to='/reservation'/>
+        //     )
+        // }
         if(this.state.data === null){
             return (
                 <center className='mt-5'> 

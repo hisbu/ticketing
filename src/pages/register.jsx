@@ -39,6 +39,7 @@ class Register extends Component{
                         Axios.post('http://localhost:2000/user', {username, password})
                         .then((res)=>{
                             this.props.OnRegisterSuccess(res.data)
+                            localStorage.setItem('userLogin', res.data.username)
                         })
                         .catch((err)=>{
                             console.log(err)
@@ -64,7 +65,7 @@ class Register extends Component{
                         <Paper className='p-5'>
                             
                             <input ref="username" className='form-control mt-3' type='text' placeholder='username' />
-                            <input ref="password1" className='form-control mt-3' type='text' placeholder='password' />
+                            <input ref="password1" className='form-control mt-3' type='password' placeholder='password' />
                             <input ref="password2" className='form-control mt-3' type='text' placeholder='Confirm Password'/>
                             {
                                 this.state.error===''?null: //jika state error bernilai kosong maka 'null' 

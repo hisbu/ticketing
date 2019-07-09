@@ -12,8 +12,12 @@ import {
   DropdownMenu,
   DropdownItem } from 'reactstrap';
 import { Link } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { onLogout } from './../redux/actions'
+import { Loader } from 'react-loader-spinner'
 
-export default class Example extends React.Component {
+
+class Example extends React.Component {
 //   constructor(props) {
 //     super(props);
 
@@ -32,6 +36,19 @@ export default class Example extends React.Component {
         isOpen: !this.state.isOpen
     });
     }
+
+    onBtnLogoutClick=()=>{
+      this.props.onLogout()
+      localStorage.removeItem('userLogin')
+    }
+
+    checkLoginStatu=()=>{
+      
+        if(this.props.user==='' && localStorage.get('userLogin')!==null){
+          return(<Loader type="ThreeDots" color="#somecolor" height={30} width={30} />)
+        }
+      }
+    
   render() {
     return (
       <div>
@@ -45,12 +62,32 @@ export default class Example extends React.Component {
                   <NavLink  style={{color:'white'}}>Manage Movie</NavLink>
                 </NavItem>
               </Link>
-              <NavItem>
+              {this.checkLoginStatu}
+              {this.props.name !== ''?
+              <UncontrolledDropdown nav inNavbar >
+                <DropdownToggle nav caret style={{color:'white'}}>
+                  {this.props.name}
+                </DropdownToggle>
+                <DropdownMenu right>
+                  <DropdownItem>
+                    Option 1
+                  </DropdownItem>
+                  <DropdownItem>
+                    Option 2
+                  </DropdownItem>
+                  <DropdownItem divider />
+                  <DropdownItem onClick={this.onBtnLogoutClick}>
+                    Logout
+                  </DropdownItem>
+                </DropdownMenu>
+              </UncontrolledDropdown>
+            : 
+            <NavItem>
               <Link to='/login'  >
                 <NavLink style={{color:'white'}}>Login</NavLink>
                 </Link>
               </NavItem>
-              
+            }
             </Nav>
           </Collapse>
         </Navbar>
@@ -58,3 +95,11 @@ export default class Example extends React.Component {
     );
   }
 }
+
+const mapStateToProps = (state) =>{
+  return{
+    name : state.user.username
+
+  }
+}
+export default connect(mapStateToProps, {onLogout}) (Example);

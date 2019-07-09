@@ -7,6 +7,7 @@ import { faPlayCircle, faPlay, faInfo } from '@fortawesome/free-solid-svg-icons'
 import  ModalVideo from 'react-modal-video'
 import { Paper } from '@material-ui/core'
 import { Input, UncontrolledCarousel } from 'reactstrap'
+import { connect } from 'react-redux'
 
 const item = [
     {
@@ -85,6 +86,11 @@ class MovieList extends React.Component{
                 <UncontrolledCarousel items = {item}/>
             </div>
             
+                {/* {this.props.username !== "" ?
+                <div className='alert alert-success'>
+                    Hello, welcome back {this.props.username}
+                </div>:null
+                } */}
             <div className="row mt-5 justify-content-center">
                 {/* <div className="row justify-content-center">
                     <Paper className=' m-3 p-2 col-md-8'>
@@ -112,4 +118,10 @@ class MovieList extends React.Component{
     }
 }
 
-export default MovieList;
+const mapStateToProps = (state) => {
+    return{
+        username : state.user.username
+    }
+}
+
+export default connect( mapStateToProps)(MovieList);

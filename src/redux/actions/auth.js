@@ -4,3 +4,9 @@ export const OnRegisterSuccess = (data) => {
         payload : data
     }
 }
+
+export const onLogout = () => {
+    return{
+        type: 'LOG_OUT'
+    }
+}
