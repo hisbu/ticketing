@@ -1,14 +1,15 @@
 import React from 'react'
 import Axios from 'axios'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faClock, faThumbsUp, faThumbsDown, faQuestion, faChair, faBookOpen, faVideo} from '@fortawesome/free-solid-svg-icons'
+import { faClock, faThumbsUp, faThumbsDown, faQuestion, faChair, faBookOpen, faVideo, faHeart, faHeartbeat} from '@fortawesome/free-solid-svg-icons'
 import { Spinner } from 'reactstrap';
-import { Button } from '@material-ui/core';
+// import { Button } from '@material-ui/core';
 import {connect} from 'react-redux'
 import { Redirect } from 'react-router-dom'
-import ReactDom from 'react-dom'
+// import ReactDom from 'react-dom'
 import  ModalVideo from 'react-modal-video'
 import { fromLoginPage, filmId} from './../redux/actions'
+import { ApiUrl } from '../support/urlApi';
 
 
 class MovieDetail extends React.Component{
@@ -28,10 +29,15 @@ class MovieDetail extends React.Component{
         .then((res) => {
             console.log(res.data)
             this.setState({data:res.data})
+            if(this.props.user.watchList.includes(res.data.id)){
+                document.getElementsById('heart').style.color="blue"
+            }
         })
         .catch((err)=>{
             console.log(err)
         })
+
+        
         
     }
 
@@ -44,6 +50,68 @@ class MovieDetail extends React.Component{
             this.setState({userLogin: true})
         }
         
+    }
+
+    onBtnWatchList=()=>{
+        var watchList = []
+        var filmId = this.props.location.search.split('=')[1]
+        var userId=this.props.user.id
+        // alert(filmId)
+        Axios.get(ApiUrl+'/user/'+userId)
+        .then((res)=>{
+            console.log(res.data.watchList)
+            var data=res.data.watchList
+            var arr=data.concat()
+            watchList.concat(data)
+            if(data.length!==0){
+                if(!arr.includes(filmId)){
+                    // arr.push(filmId)
+                    Axios.patch(ApiUrl+'/user/'+userId, {watchList: [...arr, ...filmId]})
+                    .then((res)=>{
+                        console.log('if beda')
+                        console.log(res.data)
+                        alert('Film '+ this.state.data.title +' berhasil ditambahkan kedalam daftar Watch list')
+                       
+                    })
+                    .catch((err)=>{
+                        console.log(err)
+                    })
+                }else{
+                    var check = data.map((val, i)=>{
+                            if(val===filmId){
+                                var dataSplice = data
+                                dataSplice.splice(i, 1)
+                                Axios.patch(ApiUrl+'/user/'+userId, {watchList: dataSplice})
+                                .then((res)=>{
+                                    console.log('if sama')
+                                    console.log(res.data)
+                                    alert('Film '+ this.state.data.title +' berhasil dihapus dari daftar Watch list')
+                                })
+                                .catch((err)=>{
+                                    console.log(err)
+                                })
+                            }
+                        })
+
+                }
+            }else{
+                arr.push(filmId)
+                Axios.patch(ApiUrl+'/user/'+userId, {watchList: [filmId]})
+                .then((res)=>{
+                    console.log('if data kosong')
+                    console.log(res.data)
+                    alert('Film '+ this.state.data.title +' berhasil ditambahkan kedalam daftar Watch list')
+                })
+                .catch((err)=>{
+                    console.log(err)
+                })
+            }
+        })
+        .catch((err)=>{
+            console.log(err)
+        })
+        
+
     }
 
 
@@ -96,6 +164,7 @@ class MovieDetail extends React.Component{
                         <div className="row ">
                             <div className='col-md-3  imageDetail ' >
                                 <img src={this.state.data.image} alt="" width/>
+                                <div className='heart' id='heart' onClick={this.onBtnWatchList}><FontAwesomeIcon icon={faHeart}/></div>
                                 <div className='buy mt-3' onClick={()=>this.onBuyTicketClick(this.state.data.id)}>Buy Ticket</div>
                             </div>
                             <div className='col-md-9 '>

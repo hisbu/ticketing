@@ -4,14 +4,14 @@ import {Paper, ListSubheader, List, ListItem, ListItemIcon, ListItemText, Collap
 import { ExpandMore, Theaters, EventSeatOutlined, ExpandLess, AccessTime, ArrowRight} from '@material-ui/icons'
 import {ApiUrl} from './../support/urlApi'
 import Axios from 'axios';
-const useStyles = makeStyles(thems => ({
-    nested:{
-        paddingLeft: thems.spacing(4),
-        genre:[],
-        sutradara:[],
-        playing:[]
-    }
-}))
+// const useStyles = makeStyles(thems => ({
+//     nested:{
+//         paddingLeft: thems.spacing(4),
+//         genre:[],
+//         sutradara:[],
+//         playing:[]
+//     }
+// }))
 
 
 
@@ -24,7 +24,8 @@ class Filter extends React.Component{
     renderData=()=>{
         Axios.get(ApiUrl+'/movies')
         .then((res)=>{
-            console.log(res.data.genre)
+            console.log('from filter')
+            console.log(res.data)
             
             
         })

@@ -1,6 +1,6 @@
 import React from 'react'
 import {Button} from 'reactstrap'
-import { Paper} from '@material-ui/core'
+// import { Paper} from '@material-ui/core'
 import Numeral from 'numeral'
 import Axios from 'axios';
 import { ApiUrl } from './../support/urlApi'
@@ -16,8 +16,8 @@ class Reservation extends React.Component{
     }
 
     getDataApi=()=>{
-        var seat=this.state.seat
-        var booked = this.state.booked
+        // var seat=this.state.seat
+        // var booked = this.state.booked
         
         Axios.get(ApiUrl+'/movies?id=')
     }

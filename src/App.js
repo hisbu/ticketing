@@ -16,6 +16,7 @@ import {ApiUrl} from './support/urlApi'
 import { OnRegisterSuccess } from './redux/actions'
 import { connect } from 'react-redux'
 import NotFount from './pages/PagesNotFound'
+import WatchList from './pages/watchList'
 
 class App extends React.Component {
 
@@ -49,6 +50,7 @@ class App extends React.Component {
           <Route path='/login' component={LoginPage}/>
           <Route path='/filter' component={Filter}/>
           <Route path='/reservation' component={Reservation}/>
+          <Route path='/watchList' component={WatchList}/>
           <Route path='*' component={NotFount}/>
         </Switch>
         

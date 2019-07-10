@@ -428,6 +428,25 @@ body{
   height: 50%;
 }
 
+.heart{
+  position: absolute;
+  right: 30px;
+  top: 10px;
+  color: rgb(146, 146, 146);
+  font-size: 30px;
+  text-shadow: 1px 1px #FF0000;
+}
+
+
+
+.heart:hover{
+  color: #db009e;
+}
+
+
+
+
+
 /*=====PAGE NOT FOUND */
 #notfound {
   position: relative;
