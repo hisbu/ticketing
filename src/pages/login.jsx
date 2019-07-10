@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {Paper} from '@material-ui/core'
 import {Link, Redirect} from 'react-router-dom'
 import { connect } from 'react-redux'
-import { OnRegisterSuccess } from './../redux/actions'
+import { OnRegisterSuccess, fromLoginPage, filmId} from './../redux/actions'
 import Axios from 'axios';
 import { ApiUrl } from './../support/urlApi'
 
@@ -17,6 +17,12 @@ class LoginPage extends Component{
         error : '',
         login:false
     }
+
+    // componentDidMount=()=>{
+    //     // console.log('propo username'+this.props.username)
+    //     // console.log('propo status'+this.props.status)
+    //     // console.log('propo filmId'+this.props.filmId)
+    // }
 
     onBtnLoginClick=()=>{
         var username = this.refs.username.value
@@ -80,7 +86,9 @@ class LoginPage extends Component{
 
 const mapStateToProps = (state) =>{
     return{
-        username : state.user.username
+        username : state.user.username,
+        status : state.status.login,
+        filmId : state.status.filmId
     }
 }
 export default connect(mapStateToProps, {OnRegisterSuccess}) (LoginPage);

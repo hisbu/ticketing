@@ -40,6 +40,8 @@ class Example extends React.Component {
     onBtnLogoutClick=()=>{
       this.props.onLogout()
       localStorage.removeItem('userLogin')
+      localStorage.removeItem('fromMovieDetail')
+      localStorage.removeItem('filmId')
     }
 
     checkLoginStatu=()=>{

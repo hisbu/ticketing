@@ -8,11 +8,13 @@ import {connect} from 'react-redux'
 import { Redirect } from 'react-router-dom'
 import ReactDom from 'react-dom'
 import  ModalVideo from 'react-modal-video'
+import { fromLoginPage, filmId} from './../redux/actions'
+
 
 class MovieDetail extends React.Component{
     state = {
         data:null,
-        userLogin:true,
+        userLogin:null,
         isOpen: false
     }
 
@@ -33,26 +35,33 @@ class MovieDetail extends React.Component{
         
     }
 
-    onBuyTicketClick =()=>{
-        alert(this.props.user.id)
+    onBuyTicketClick =(filmId)=>{
+        // alert(filmId)
         if(this.props.user.id===0){
             this.setState({userLogin:false})
+       
+        }else{
+            this.setState({userLogin: true})
         }
+        
     }
 
 
     render(){
-        if(this.state.userLogin === false){
+        
+        if(this.state.userLogin === false ){
             return(
                 <Redirect to="/login"/>
 
             )
         }
-        // else if(this.state.userLogin === true){
-        //     return(
-        //         <Redirect to='/reservation'/>
-        //     )
-        // }
+
+        if(this.state.userLogin===true){
+            return(
+                <Redirect to={{ pathname : '/reservation', state: this.state.data}}/>
+            )
+        }
+  
         if(this.state.data === null){
             return (
                 <center className='mt-5'> 
@@ -87,7 +96,7 @@ class MovieDetail extends React.Component{
                         <div className="row ">
                             <div className='col-md-3  imageDetail ' >
                                 <img src={this.state.data.image} alt="" width/>
-                                <div className='buy mt-3' onClick={this.onBuyTicketClick}>Buy Ticket</div>
+                                <div className='buy mt-3' onClick={()=>this.onBuyTicketClick(this.state.data.id)}>Buy Ticket</div>
                             </div>
                             <div className='col-md-9 '>
                                 <div className="contentBox">
@@ -130,7 +139,17 @@ class MovieDetail extends React.Component{
 
 const mapStateToProps = (state) =>{
     return{
-        user : state.user
+        user : state.user,
+        status: state.status.login,
+        filmId: state.status.filmId
+        
     }
 }
-export default connect(mapStateToProps) (MovieDetail);
+
+// const mapStateToProps2 = (data)=>{
+//     return{
+//         status: data.status.login,
+//         filmId: data.status.filmId
+//     }
+// }
+export default connect(mapStateToProps, {fromLoginPage, filmId}) (MovieDetail);

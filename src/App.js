@@ -3,19 +3,19 @@ import React from 'react';
 import './App.css';
 import Header from './components/header'
 // import Footer from './components/footer'
-import { Route } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 import MovieList from './pages/movieList'
 import MovieDetail from './pages/movieDetail'
 import ManageMovie from './pages/admin/manageMovie'
 import Register from './pages/register'
 import LoginPage from './pages/login'
 import Reservation from './pages/seatReservation'
-import FilterList from './components/filterList'
 import Filter from './components/filter'
 import Axios from 'axios';
 import {ApiUrl} from './support/urlApi'
 import { OnRegisterSuccess } from './redux/actions'
 import { connect } from 'react-redux'
+import NotFount from './pages/PagesNotFound'
 
 class App extends React.Component {
 
@@ -41,15 +41,17 @@ class App extends React.Component {
     return (
       <div>
         <Header/>
-        <Route path='/' component={MovieList} exact/>
-        <Route path='/movieDetail' component={MovieDetail}/>
-        <Route path='/manageMovie' component={ManageMovie}/>
-        <Route path='/register' component={Register}/>
-        <Route path='/login' component={LoginPage}/>
-        <Route path='/filterList' component={FilterList}/>
-        <Route path='/filter' component={Filter}/>
-        <Route path='/reservation' component={Reservation}/>
-        {/* <Footer/> */}
+        <Switch>
+          <Route path='/' component={MovieList} exact/>
+          <Route path='/movieDetail' component={MovieDetail}/>
+          <Route path='/manageMovie' component={ManageMovie}/>
+          <Route path='/register' component={Register}/>
+          <Route path='/login' component={LoginPage}/>
+          <Route path='/filter' component={Filter}/>
+          <Route path='/reservation' component={Reservation}/>
+          <Route path='*' component={NotFount}/>
+        </Switch>
+        
       </div>
     );
   }

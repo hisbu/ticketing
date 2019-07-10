@@ -8,6 +8,7 @@ import  ModalVideo from 'react-modal-video'
 import { Paper } from '@material-ui/core'
 import { Input, UncontrolledCarousel } from 'reactstrap'
 import { connect } from 'react-redux'
+import Filter from './../components/filter'
 
 const item = [
     {
@@ -104,8 +105,10 @@ class MovieList extends React.Component{
 
                     </Paper>
                 </div> */}
-                <Paper className='col-md-2 mr-2'></Paper>
-                <Paper className='p-3 col-md-9 justify-content-center'>
+                <Paper className='col-md-2 mr-2'>
+                    <Filter/>
+                </Paper>
+                <Paper className='p-3 col-md-8 justify-content-center'>
                     <Paper style={{width:'93%', color:'grey', textAlign:'center'}} className='p-3 m-4'>Now Showing</Paper>
                 <div className="row justify-content-center">
                    { this.printMovie()}

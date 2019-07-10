@@ -2,10 +2,14 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import {Paper, ListSubheader, List, ListItem, ListItemIcon, ListItemText, Collapse} from '@material-ui/core';
 import { ExpandMore, Theaters, EventSeatOutlined, ExpandLess, AccessTime, ArrowRight} from '@material-ui/icons'
-
+import {ApiUrl} from './../support/urlApi'
+import Axios from 'axios';
 const useStyles = makeStyles(thems => ({
     nested:{
-        paddingLeft: thems.spacing(4)
+        paddingLeft: thems.spacing(4),
+        genre:[],
+        sutradara:[],
+        playing:[]
     }
 }))
 
@@ -13,35 +17,58 @@ const useStyles = makeStyles(thems => ({
 
 class Filter extends React.Component{
     state={
-        listOpen : false
+        listOpen : false,
+        listId: 0
     }
 
-   
+    renderData=()=>{
+        Axios.get(ApiUrl+'/movies')
+        .then((res)=>{
+            console.log(res.data.genre)
+            
+            
+        })
+        .catch((err)=>{
+            console.log(err)
+        })
+    }
+
     
-    
-    onListClick=()=>{
+    onListClick=(id)=>{
         if(this.state.listOpen===false){
-            this.setState({listOpen: true})
+            this.setState({listOpen: true, listId:id})
         }else{
-            this.setState({listOpen: false})
+            this.setState({listOpen: false, listId:0})
         }
         console.log(this.state.listOpen)
         
     }
     render(){
+        {this.renderData()}
         return(
-            <div className='row'>
-                <Paper className='col-md-3'>
+            // <div className='row'>
+                <div className='mt-3'>
                     {/* <input type='button' onClick={this.onListClick} value='test'/> */}
+                    <List
+                        component="nav"
+                        aria-labelledby="nested-list-subheader"
+                        subheader={
+                            <ListSubheader component="div" id="nested-list-subheader">
+                            Filter by: 
+                            </ListSubheader>
+                        }
+                       
+                        ></List>
+
                     <List>
-                        <ListItem button onClick={this.onListClick}>
+                        <ListItem button onClick={()=>this.onListClick(1)}>
                             <ListItemIcon>
                                 <Theaters/>
                             </ListItemIcon>
                             <ListItemText primary='Genre'/>
-                            {this.state.listOpen === true ? <ExpandLess/> : <ExpandMore/>}
+                            {this.state.listOpen === true && this.state.listId===1? <ExpandLess/> : <ExpandMore/>}
                         </ListItem>
-                        <Collapse in={this.state.listOpen} timeout='auto' unmountOnExit>
+                        <Collapse in={this.state.listOpen && this.state.listId===1} timeout='auto' unmountOnExit>
                             <List >
                                 <ListItem button style={{paddingLeft:'30px'}}>
                                     <ListItemIcon>
@@ -59,14 +86,14 @@ class Filter extends React.Component{
                         </Collapse>
 
                         {/* SUtradara */}
-                        <ListItem button onClick={this.onListClick}>
+                        <ListItem button onClick={()=>this.onListClick(2)}>
                             <ListItemIcon>
                                 <EventSeatOutlined/>
                             </ListItemIcon>
                             <ListItemText primary='Sutradara'/>
-                            {this.state.listOpen === true ? <ExpandLess/> : <ExpandMore/>}
+                            {this.state.listOpen === true && this.state.listId===2 ? <ExpandLess/> : <ExpandMore/>}
                         </ListItem>
-                        <Collapse in={this.state.listOpen} timeout='auto' unmountOnExit>
+                        <Collapse in={this.state.listOpen && this.state.listId===2} timeout='auto' unmountOnExit>
                             <List >
                                 <ListItem button style={{paddingLeft:'30px'}}>
                                     <ListItemIcon>
@@ -84,14 +111,14 @@ class Filter extends React.Component{
                         </Collapse>
 
                         {/* Playing At */}
-                        <ListItem button onClick={this.onListClick}>
+                        <ListItem button onClick={()=>this.onListClick(3)}>
                             <ListItemIcon>
                                 <AccessTime/>
                             </ListItemIcon>
                             <ListItemText primary='Show Time'/>
-                            {this.state.listOpen === true ? <ExpandLess/> : <ExpandMore/>}
+                            {this.state.listOpen === true && this.state.listId===3? <ExpandLess/> : <ExpandMore/>}
                         </ListItem>
-                        <Collapse in={this.state.listOpen} timeout='auto' unmountOnExit>
+                        <Collapse in={this.state.listOpen && this.state.listId===3} timeout='auto' unmountOnExit>
                             <List >
                                 <ListItem button style={{paddingLeft:'30px'}}>
                                     <ListItemIcon>
@@ -108,8 +135,8 @@ class Filter extends React.Component{
                             </List>
                         </Collapse>
                     </List>
-                </Paper>
-            </div>
+                </div>
+            // </div>
         )
     }
 }
