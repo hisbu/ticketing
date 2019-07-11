@@ -15,6 +15,8 @@ import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { onLogout } from './../redux/actions'
 import { Loader } from 'react-loader-spinner'
+import { FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import { faShoppingCart} from '@fortawesome/free-solid-svg-icons'
 
 
 class Example extends React.Component {
@@ -46,7 +48,7 @@ class Example extends React.Component {
 
     checkLoginStatu=()=>{
       
-        if(this.props.user==='' && localStorage.get('userLogin')!==null){
+        if(this.props.user ==='' && localStorage.get('userLogin')!==null){
           return(<Loader type="ThreeDots" color="#somecolor" height={30} width={30} />)
         }
       }
@@ -59,11 +61,21 @@ class Example extends React.Component {
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar >
-              <Link to='/manageMovie'  >
+              {this.props.name !==''?
+              <Link to='/cart'>
                 <NavItem>
-                  <NavLink  style={{color:'white'}}>Manage Movie</NavLink>
+                  <NavLink style={{color:'white', fontSize:'20px'}}><FontAwesomeIcon icon={faShoppingCart}/></NavLink>
                 </NavItem>
-              </Link>
+              </Link>:null
+              }
+              {this.props.role ==='admin'?
+                <Link to='/manageMovie'  >
+                  <NavItem>
+                    <NavLink  style={{color:'white'}}>Manage Movie</NavLink>
+                  </NavItem>
+                </Link>:
+                null
+              }
               {this.checkLoginStatu}
               {this.props.name !== ''?
               <UncontrolledDropdown nav inNavbar >
@@ -100,8 +112,9 @@ class Example extends React.Component {
 
 const mapStateToProps = (state) =>{
   return{
-    name : state.user.username
-
+    name : state.user.username,
+    role : state.user.role,
+    cart : state.user.cart
   }
 }
 export default connect(mapStateToProps, {onLogout}) (Example);

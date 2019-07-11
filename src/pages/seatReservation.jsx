@@ -6,13 +6,15 @@ import Axios from 'axios';
 import { ApiUrl } from './../support/urlApi'
 import PageNotFount from './../pages/PagesNotFound'
 import { connect } from 'react-redux'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCartPlus} from '@fortawesome/free-solid-svg-icons'
+import { Redirect} from 'react-router-dom'
 
 class Reservation extends React.Component{
     state={
-        seat : 80,
-        baris : 4,
-        booked : [[2,4],[3,5]],
-        chosen : []
+        booked : [],
+        chosen : [],
+        cart : false,
     }
 
     getDataApi=()=>{
@@ -20,6 +22,20 @@ class Reservation extends React.Component{
         // var booked = this.state.booked
         
         Axios.get(ApiUrl+'/movies?id=')
+    }
+
+    componentDidMount=()=>{
+
+        // this.setState({booked: this.props.location.state.booked})
+
+        Axios.get(ApiUrl +'/movies/'+this.props.location.state.id)
+        .then((res)=>{
+            this.setState({booked: res.data.booked})
+        })
+        .catch((err)=>{
+            console.log(err)
+        })
+
     }
 
     
@@ -35,8 +51,8 @@ class Reservation extends React.Component{
             arr.push(arrtmp)
         }
 
-        for(var i = 0 ; i< booked.length;i++){
-            arr[booked[i][0]][booked[i][1]]=2
+        for(var i = 0 ; i< this.state.booked.length;i++){
+            arr[this.state.booked[i][0]][this.state.booked[i][1]]=2
         }
 
         for(var i = 0 ; i< this.state.chosen.length;i++){
@@ -84,12 +100,6 @@ class Reservation extends React.Component{
         var chosen = this.state.chosen
         chosen.push(index)
         this.setState({chosen:chosen})
-        // console.log(this.state.chosen)
-        // console.log(index)
-
-        
-
-
     }
 
     
@@ -106,10 +116,11 @@ class Reservation extends React.Component{
     }
 
     onBtnBuyClick=()=>{
-        var transaction = this.props.transaction
+        var cart = this.props.cart
         //post ke movie
         if(this.state.chosen.length !== 0){
-            var booked = this.props.location.state.booked
+            var booked = this.state.booked
+
             var arr = [...booked, ...this.state.chosen]
             Axios.patch(ApiUrl + '/movies/'+this.props.location.state.id, {booked : arr})
             .then((res)=>{
@@ -119,26 +130,50 @@ class Reservation extends React.Component{
                     qty : this.state.chosen.length,
                     total : this.state.chosen.length*35000
                 }
-
-                transaction.push(obj)
-                Axios.patch(ApiUrl +'/user/'+ this.props.id, {transaction : transaction})
+                var cek=false
+                var index=0
+                if(this.props.cart.length !== 0){
+                    for(var i=0; i<this.props.cart.length; i++){
+                        if(this.props.cart[i].title === this.props.location.state.title){
+                            cek=true
+                            index=i
+                        }
+                    }
+                    if(cek === true){
+                        cart[index].qty+=this.state.chosen.length
+                        cart[index].total+=this.state.chosen.length*35000
+                    }else{
+                        cart.push(obj)
+                    }
+                }else{
+                    cart.push(obj)
+                }
+                console.log(cart)
+                Axios.patch(ApiUrl +'/user/'+ this.props.id, {cart : cart})
                 .then((res)=>{
                     alert('masuk')
+                    this.setState({booked: [...this.state.booked, ...this.state.chosen], chosen:[]})
+                    this.setState({cart: true})
                 })
             })
             .catch((err)=>{
                 console.log(err)
             })
+        }else{
+            alert('anda belum memilih kursi')
         }
         //post ke users
 
     }
     render(){
-        console.log(this.props.location.state)
+        // console.log(this.props.location.state)
         if(this.props.location.state===undefined){
             return(
                 <PageNotFount/>
             )
+        }
+        if(this.state.cart === true){
+            return (<Redirect to='/cart'/>)
         }
         
         return(
@@ -179,7 +214,7 @@ class Reservation extends React.Component{
                     null:
                     <div> Total Bayar : Rp. {Numeral(this.state.chosen.length * 35000).format(0,0)}</div>
                 }
-                <Button onClick={this.onBtnBuyClick} color='primary' width='100%' className='mt-3 pr-5 pl-5'>BUY</Button>
+                <Button onClick={this.onBtnBuyClick} color='primary' width='100%' className='mt-3 pr-5 pl-5'><FontAwesomeIcon icon={faCartPlus}/> Add to Cart</Button>
                 </div>
             </div>
             </div>
@@ -190,7 +225,8 @@ class Reservation extends React.Component{
 const mapStateToProps=( state )=>{
     return{
         id: state.user.id,
-        transaction : state.user.transaction
+        transaction : state.user.transaction,
+        cart : state.user.cart
     }
 }
 

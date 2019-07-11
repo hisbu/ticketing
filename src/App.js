@@ -17,6 +17,7 @@ import { OnRegisterSuccess } from './redux/actions'
 import { connect } from 'react-redux'
 import NotFount from './pages/PagesNotFound'
 import WatchList from './pages/watchList'
+import Cart from './pages/cart'
 
 class App extends React.Component {
 
@@ -25,13 +26,14 @@ class App extends React.Component {
     if(username !== null){
       Axios.get(ApiUrl+'/user?username='+ username)
       .then((res) => {
-        console.log(res.data)
+        // console.log(res.data)
         this.props.OnRegisterSuccess(res.data[0])
       })
       .catch((err)=>{
         console.log(err)
       })
     }
+    console.log(this.props.data)
   }
   render(){
     // if(this.props.user === '' && localStorage.get('userLogin')!== null){
@@ -51,6 +53,7 @@ class App extends React.Component {
           <Route path='/filter' component={Filter}/>
           <Route path='/reservation' component={Reservation}/>
           <Route path='/watchList' component={WatchList}/>
+          <Route path='/cart' component={Cart}/>
           <Route path='*' component={NotFount}/>
         </Switch>
         
@@ -62,7 +65,8 @@ class App extends React.Component {
 
   const mapStateToProps  = (state) =>{
     return{
-      user : state.user.username
+      user : state.user.username,
+      data : state.user
     }
   }
 

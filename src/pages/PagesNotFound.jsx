@@ -10,7 +10,7 @@ class PageNotFound extends React.Component{
                 <h1>Oops!</h1>
                 <h2>404 - The Page can't be found</h2>
               </div>
-              <Link to='/'><a>Go TO Homepage</a></Link>
+              <Link to='/'>Go TO Homepage</Link>
             </div>
           </div>
         )

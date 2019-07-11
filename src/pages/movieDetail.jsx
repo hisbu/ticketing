@@ -1,7 +1,7 @@
 import React from 'react'
 import Axios from 'axios'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faClock, faThumbsUp, faThumbsDown, faQuestion, faChair, faBookOpen, faVideo, faHeart, faHeartbeat} from '@fortawesome/free-solid-svg-icons'
+import { faClock, faThumbsUp, faThumbsDown, faQuestion, faChair, faBookOpen, faVideo, faHeart} from '@fortawesome/free-solid-svg-icons'
 import { Spinner } from 'reactstrap';
 // import { Button } from '@material-ui/core';
 import {connect} from 'react-redux'
@@ -77,7 +77,7 @@ class MovieDetail extends React.Component{
                         console.log(err)
                     })
                 }else{
-                    var check = data.map((val, i)=>{
+                    data.map((val, i)=>{
                             if(val===filmId){
                                 var dataSplice = data
                                 dataSplice.splice(i, 1)

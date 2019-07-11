@@ -87,8 +87,7 @@ class LoginPage extends Component{
 const mapStateToProps = (state) =>{
     return{
         username : state.user.username,
-        status : state.status.login,
-        filmId : state.status.filmId
+        
     }
 }
 export default connect(mapStateToProps, {OnRegisterSuccess}) (LoginPage);

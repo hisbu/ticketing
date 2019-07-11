@@ -1,4 +1,4 @@
-const INITIAL_STATE = {id: 0, username: '', password: ''}
+const INITIAL_STATE = {id: 0, username: '', password: '', rore:'',cart:[]}
 
 export default (state = INITIAL_STATE, action) => {
     if(action.type === 'LOGIN_SUCCESS'){

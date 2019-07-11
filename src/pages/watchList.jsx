@@ -10,31 +10,37 @@ class WatchList extends React.Component{
 
     renderData=()=>{
         var data = this.props.user.watchList
+        // var movies = this.state.movies
         // alert(typeof(data))
         Axios.get(ApiUrl+'/movies')
         .then((res)=>{
             // console.log(res.data)
             this.setState({movies: res.data})
+            data.map((val)=>{
+                return (
+                    alert(val)
+                )
+            })
         })
         .catch((err)=>{
             console.log(err)
         })
-        
-       for(var i = 0 ; i<data.length;i++){
-           for(var j = 0; j<this.state.movies.length; j++){
-               if(data[i]==this.state.movies.id[j]){
-                   console.log('sama'+ data[i], this.state.movies.id[j])
-               }else{
-                   console.log('ga nemu')
-               }
-               console.log('didalam if')
-               console.log(data[i])
-                console.log(this.state.movies.id[j])
-           }
-       }
+        // console.log('dari render page watchlist')
+        // console.log(typeof(data))
+        // var jsx = this.props.user.watchList.map((val,i)=>{
+        //     return(
+        //         movies.map((val1, index)=>{
+        //             if(val === val1.id){
+        //                 return console.log('ketemu')
+        //             }
+        //         })
+        //     )
+        // })
+        // return jsx
     }
 
     render(){
+        // this.renderData()
         // console.log('dari page watch list')
         // console.log(this.state.movies)
         return(
