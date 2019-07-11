@@ -443,7 +443,12 @@ body{
   color: #db009e;
 }
 
-
+.badge{
+  top: '50%';
+  right: '-3';
+  /* The border color match the background color */
+  border: '2px solid white';
+}
 
 
 

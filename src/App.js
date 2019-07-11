@@ -18,6 +18,8 @@ import { connect } from 'react-redux'
 import NotFount from './pages/PagesNotFound'
 import WatchList from './pages/watchList'
 import Cart from './pages/cart'
+import CheckOut from './pages/checkout'
+import History from './pages/historyTransaction'
 
 class App extends React.Component {
 
@@ -33,7 +35,7 @@ class App extends React.Component {
         console.log(err)
       })
     }
-    console.log(this.props.data)
+    // console.log(this.props.data)
   }
   render(){
     // if(this.props.user === '' && localStorage.get('userLogin')!== null){
@@ -54,6 +56,8 @@ class App extends React.Component {
           <Route path='/reservation' component={Reservation}/>
           <Route path='/watchList' component={WatchList}/>
           <Route path='/cart' component={Cart}/>
+          <Route path='/checkout' component={CheckOut}/>
+          <Route path='/history' component={History}/>
           <Route path='*' component={NotFount}/>
         </Switch>
         

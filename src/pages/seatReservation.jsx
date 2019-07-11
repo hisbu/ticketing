@@ -12,6 +12,7 @@ import { Redirect} from 'react-router-dom'
 
 class Reservation extends React.Component{
     state={
+        data:null,
         booked : [],
         chosen : [],
         cart : false,
@@ -27,7 +28,8 @@ class Reservation extends React.Component{
     componentDidMount=()=>{
 
         // this.setState({booked: this.props.location.state.booked})
-
+        this.setState({data: this.props.location.state})
+        console.log(this.props.location.state)
         Axios.get(ApiUrl +'/movies/'+this.props.location.state.id)
         .then((res)=>{
             this.setState({booked: res.data.booked})
@@ -173,7 +175,10 @@ class Reservation extends React.Component{
             )
         }
         if(this.state.cart === true){
-            return (<Redirect to='/cart'/>)
+            return (
+            
+            <Redirect to={{pathname:'/cart', state: this.props.id}}/>
+            )
         }
         
         return(

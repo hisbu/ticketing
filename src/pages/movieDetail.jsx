@@ -209,8 +209,7 @@ class MovieDetail extends React.Component{
 const mapStateToProps = (state) =>{
     return{
         user : state.user,
-        status: state.status.login,
-        filmId: state.status.filmId
+       
         
     }
 }
