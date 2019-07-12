@@ -46,7 +46,7 @@ class MovieList extends React.Component{
     getDataMovie=()=>{
         Axios.get('http://localhost:2000/movies')
         .then((res)=>{
-            console.log(res.data)
+            // console.log(res.data)
             this.setState({data: res.data})
         })
         .catch((err)=>{

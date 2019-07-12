@@ -21,6 +21,9 @@ import IconButton from '@material-ui/core/IconButton';
 import Badge from '@material-ui/core/Badge';
 import { withStyles } from '@material-ui/core/styles';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import { Redirect } from 'react-router-dom'
+import { ApiUrl} from './../support/urlApi'
+import Axios from 'axios';
 
 const StyledBadge = withStyles(theme => ({
   badge: {
@@ -34,17 +37,29 @@ const StyledBadge = withStyles(theme => ({
 }))(Badge);
 
 class Example extends React.Component {
-//   constructor(props) {
-//     super(props);
-
-//     this.toggle = this.toggle.bind(this);
-//     this.state = {
-//       isOpen: false
-//     };
-//   }
 
     state={
-        isOpen: false
+        isOpen: false,
+        logout:false,
+        data:null,
+        cart:null
+    }
+
+    componentDidMount=()=>{
+      console.log(this.props.name)
+      var user = localStorage.getItem('userLogin')
+      Axios.get(ApiUrl+'/user?username='+ user)
+      .then((res)=>{
+        console.log(res.data[0].cart)
+        this.setState({data: res.data})
+        console.log(this.state.data)
+        this.setState({cart: res.data[0].cart.length})
+        // this.setState({cart: res.data[0].cart.length})
+        console.log(this.state.cart)
+      })
+      .catch((err)=>{
+        console.log(err)
+      })
     }
 
     toggle= ()=> {
@@ -58,6 +73,7 @@ class Example extends React.Component {
       localStorage.removeItem('userLogin')
       localStorage.removeItem('fromMovieDetail')
       localStorage.removeItem('filmId')
+      // this.setState({logout: true})
     }
 
     checkLoginStatu=()=>{
@@ -68,21 +84,28 @@ class Example extends React.Component {
       }
     
   render() {
-    console.log()
+    // if(this.state.data===null){
+    //   return(
+    //     <p>loading data</p>
+    //   )
+    // }
+    if(this.state.logout===true){
+      return ( <Redirect to='/'/>)
+    }
     return (
       <div>
         <Navbar color="dark" light expand="md">
-          <NavbarBrand href="/"  style={{color:'white'}}>Ticket</NavbarBrand>
+          <NavbarBrand href="/"  style={{color:'white'}}>Q~Cinema</NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar >
-              {this.props.name !==''?
+              {this.props.name !=='' && this.props.role !== 'admin'? 
               <Link to='/cart'>
                 <NavItem>
                   <NavLink style={{color:'white', fontSize:'20px'}}>
                     {/* <FontAwesomeIcon icon={faShoppingCart}/>{this.props.cart.length} */}
                     <IconButton aria-label="Cart">
-                      <StyledBadge badgeContent={this.props.cart.length} color="primary">
+                      <StyledBadge badgeContent={this.state.cart} color="primary">
                         <ShoppingCartIcon style={{color:"white"}} />
                       </StyledBadge>
                     </IconButton>
@@ -105,15 +128,18 @@ class Example extends React.Component {
                   {this.props.name}
                 </DropdownToggle>
                 <DropdownMenu right>
+                  {
+                    this.props.role==='admin'?null:
                   <DropdownItem>
                     <Link to={{pathname:'/history', state:this.props.id}}> History Transaksi</Link>
                   </DropdownItem>
+                  }
                   <DropdownItem>
-                    Option 2
+                    <Link to={{pathname:'/profile', state:this.props.id}}>Profile</Link>
                   </DropdownItem>
                   <DropdownItem divider />
                   <DropdownItem onClick={this.onBtnLogoutClick}>
-                    Logout
+                    <Link to='/'>Logout</Link>
                   </DropdownItem>
                 </DropdownMenu>
               </UncontrolledDropdown>

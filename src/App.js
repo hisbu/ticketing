@@ -21,6 +21,7 @@ import Cart from './pages/cart'
 import CheckOut from './pages/checkout'
 import History from './pages/historyTransaction'
 import Test from './pages/test'
+import Profile from './pages/user'
 
 class App extends React.Component {
 
@@ -60,6 +61,7 @@ class App extends React.Component {
           <Route path='/checkout' component={CheckOut}/>
           <Route path='/history' component={History}/>
           <Route path='/test' component={Test}/>
+          <Route path='/profile' component={Profile}/>
           <Route path='*' component={NotFount}/>
         </Switch>
         

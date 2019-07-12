@@ -13,11 +13,11 @@ class History extends React.Component{
     }
 
     componentDidMount=()=>{
-        console.log(this.props.userData)
-        console.log(this.props.location.state)
+        // console.log(this.props.userData)
+        // console.log(this.props.location.state)
         Axios.get(ApiUrl+'/user/'+this.props.location.state)
         .then((res)=>{
-            console.log(res.data.transaction.items)
+            // console.log(res.data.transaction.items)
             this.setState({dataTransaksi: res.data.transaction})
         })
         .catch((err)=>{
@@ -41,10 +41,10 @@ class History extends React.Component{
         // console.log(qty + ' - '+harga)
         var test=''
         var jsx = data.reverse().map((val,i)=>{
-            var qty=0
+            var qty=val.items.length
             var total=0
             val.items.map((val1,i)=>{
-                qty+= val1.qty
+                // qty+= val1.qty
                 total+=val1.total
             })
             return(
@@ -53,18 +53,7 @@ class History extends React.Component{
                     <TableCell>{val.tgl}</TableCell>
                     <TableCell>{qty}</TableCell>
                     <TableCell>{total}</TableCell>
-                    <TableCell><Button color='primary' onClick={()=>this.toggle(i)}>Detail</Button></TableCell>
-                    <Collapse isOpen={this.state.collapse && this.state.index=== i}>
-                        <Card>
-                            <CardBody>
-                        
-                            Anim pariatur cliche reprehenderit,
-                            enim eiusmod high life accusamus terry richardson ad squid. Nihil
-                            anim keffiyeh helvetica, craft beer labore wes anderson cred
-                            nesciunt sapiente ea proident.
-                            </CardBody>
-                        </Card>
-                    </Collapse>
+                    <TableCell><Button color='primary' onClick={()=>this.renderDetail(i)}>Detail</Button></TableCell>
                 </TableRow>
             )
         })
@@ -74,6 +63,7 @@ class History extends React.Component{
     renderDetail=(index)=>{
         this.setState({ index:index})
         this.setState({modal:true})
+        localStorage.setItem('itemsId', index)
         // var data = this.state.dataTransaksi[index].items
         // var jsx = data.map((val,i)=>{
         //     return(
@@ -94,13 +84,14 @@ class History extends React.Component{
     }
 
     modalDetail=(index)=>{
-        this.setState({modal:true})
+        // console.log(this.state.index)
+        var id=localStorage.getItem('itemsId')
         // this.setState({modal:true})
-        var index = this.state.index
-        var data = this.state.dataTransaksi[index].items
+        // var index = this.state.index
+        // var data = this.state.dataTransaksi[index].items
         return(
         <Modal isOpen={this.state.modal} toggle={this.closeModal}>
-          <ModalHeader toggle={this.toggle}>Detail Transaction</ModalHeader>
+          <ModalHeader toggle={this.toggle}>Detail Transaction - {this.state.dataTransaksi[id].tgl}</ModalHeader>
           <ModalBody>
             <Table>
                 <TableHead>
@@ -112,7 +103,8 @@ class History extends React.Component{
                 <TableBody>
                    {
                     //    ()=>{
-                        data.map((val,i)=>{
+                        
+                        this.state.dataTransaksi[localStorage.getItem('itemsId')].items.map((val,i)=>{
                             return(
                                     <TableRow>
                                         <TableCell>{i+1}</TableCell>
@@ -144,8 +136,9 @@ class History extends React.Component{
        
         return(
             <div className='container mt-4 justify-content-center'>
-            {/* {this.modalDetail()} */}
-                <Paper className='p-3'>
+            {this.modalDetail()}
+                <Paper className='p-5'>
+                    <center><h2>Histori Transaksi</h2></center>
                     <Table>
                         <TableHead>
                             <TableCell>No</TableCell>

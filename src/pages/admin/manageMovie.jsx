@@ -150,26 +150,6 @@ class ManageMovie extends React.Component{
     
     onBtnSaveClick = () => {
 
-        // var radio1 = this.refs.radio1.refs.innerRadio1.checked
-        // alert(radio1)
-
-        // var playingAt = []
-        // if(this.refs.radio1.refs.innerRadio1.checked === true){
-        //     playingAt.push(9)
-        // }
-        // if(this.refs.radio2.refs.innerRadio2.checked === true){
-        //     playingAt.push(14)
-        // }
-        // if(this.refs.radio3.refs.innerRadio3.checked === true){
-        //     playingAt.push(16)
-        // }
-        // if(this.refs.radio4.refs.innerRadio4.checked === true){
-        //     playingAt.push(20)
-        // }
-        // if(this.refs.radio5.refs.innerRadio5.checked === true){
-        //     playingAt.push(22)
-        // }
-        // var jam = [9,14,16,20,22]
         var playingAt=[]
         for(var i=1;i<6;i++){
             if(this.refs['radio'+i].refs['innerRadio'+i].checked === true){
@@ -184,7 +164,8 @@ class ManageMovie extends React.Component{
         var image = this.refs.image.value
         var duration = this.refs.duration.value
         var sinopsis = this.refs.sinopsis.value
-        var thriller = this.refs.thriller.value
+        var thriller = this.refs.youtube.value
+        var seat = this.refs.seat.value
         
 
         var data = {
@@ -195,7 +176,10 @@ class ManageMovie extends React.Component{
             duration: duration,
             sutradara: sutradara,
             image: image,
-            thriller: thriller
+            thriller: thriller,
+            seats:seat,
+            booked:[]
+
         }
 
         if(title !== '' && sutradara!=='' && genre !== '' && sinopsis !== '' && duration >0 && image !=='' && playingAt.length > 0 ){
@@ -286,6 +270,7 @@ class ManageMovie extends React.Component{
                         <input type='number' className='form-control mt-2' placeholder='Duration' ref='duration'/>
                         <textarea className='form-control mt-2' placeholder='Sinopsis' ref='sinopsis'/>
                         <input type='text' className='form-control mt-2' placeholder='video id youtube' ref='youtube'/>
+                        <input type='text' className='form-control mt-2' placeholder='Jumlah seat' ref='seat'/>
                     </ModalBody>
                     <ModalFooter>
                         <input type='Button' value='cancel' onClick={this.closeModal} className='btn btn-danger'/>

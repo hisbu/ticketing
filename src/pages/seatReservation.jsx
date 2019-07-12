@@ -153,7 +153,7 @@ class Reservation extends React.Component{
                 console.log(cart)
                 Axios.patch(ApiUrl +'/user/'+ this.props.id, {cart : cart})
                 .then((res)=>{
-                    alert('masuk')
+                    alert('Tiket berhasil dimasukan kedalam keranjang')
                     this.setState({booked: [...this.state.booked, ...this.state.chosen], chosen:[]})
                     this.setState({cart: true})
                 })

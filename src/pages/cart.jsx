@@ -12,7 +12,9 @@ class CartPage extends React.Component{
     state={
         totalBayar:0,
         data:null,
-        checkout: false
+        checkout: false,
+        lanjut:false
+        
     }
 
     componentDidMount=()=>{
@@ -23,7 +25,7 @@ class CartPage extends React.Component{
         console.log(this.props.userData)
         
         if(this.props.location.state === undefined){
-            var getId=this.props.userData
+            var getId=this.props.userData.id
         }else{
             var getId=this.props.location.state
         }
@@ -83,8 +85,12 @@ class CartPage extends React.Component{
         .catch((err)=>{
             console.log(err)
         })
-        // console.log(this.state.userData)
-        // console.log(this.props.userData.id)
+
+        alert('Terima kasih, semalat menyaksikan film anda')
+    }
+
+    onBtnLanjutClick=()=>{
+        this.setState({lanjut: true})
     }
 
     printData=()=>{
@@ -103,8 +109,9 @@ class CartPage extends React.Component{
                 </TableRow>
                 )
         })
+                    
         // console.log('nilai dari total '+total)
-        // this.setState({totalHarga: total})
+        // this.setState({totalBayar: total})
         return jsx
     }
 
@@ -147,13 +154,21 @@ class CartPage extends React.Component{
             )
         }
 
-        if(this.state.checkout === true){
-            return <Redirect to='/checkout'/>
+        if(this.state.checkout === true || this.state.lanjut === true){
+            return <Redirect to='/'/>
         }
+
+        // if(this.state.lanjut === true){
+        //     return <Redirect to='/'/>
+        // }
 
         return(
             <div className='container justify-content-center mt-5'>
-                <Paper>
+                <Paper className='p-3'>
+                    <center>
+                    <h2>cart</h2>
+
+                    </center>
                     <Table>
                         <TableHead>
                             <TableCell> No </TableCell>
@@ -170,7 +185,8 @@ class CartPage extends React.Component{
                         </TableFooter>
                     </Table>
                 </Paper>
-                <Button onClick={this.onBtnCheckoutClick} color='primary' className='mt-4 '>Check Out</Button>
+                <Button onClick={this.onBtnCheckoutClick} color='primary' className='mt-4 mr-3 '>Check Out</Button>
+                <Button onClick={this.onBtnLanjutClick} color='success' className='mt-4 '>Lanjutkan Belanja</Button>
             </div>
         )
     }
