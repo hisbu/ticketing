@@ -15,8 +15,7 @@ import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { onLogout } from './../redux/actions'
 import { Loader } from 'react-loader-spinner'
-import { FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import { faShoppingCart} from '@fortawesome/free-solid-svg-icons'
+
 import IconButton from '@material-ui/core/IconButton';
 import Badge from '@material-ui/core/Badge';
 import { withStyles } from '@material-ui/core/styles';
@@ -46,7 +45,7 @@ class Example extends React.Component {
     }
 
     componentDidMount=()=>{
-      console.log(this.props.name)
+     
       var user = localStorage.getItem('userLogin')
       Axios.get(ApiUrl+'/user?username='+ user)
       .then((res)=>{
@@ -89,6 +88,7 @@ class Example extends React.Component {
     //     <p>loading data</p>
     //   )
     // }
+    console.log(this.props.cart.length)
     if(this.state.logout===true){
       return ( <Redirect to='/'/>)
     }
@@ -105,7 +105,7 @@ class Example extends React.Component {
                   <NavLink style={{color:'white', fontSize:'20px'}}>
                     {/* <FontAwesomeIcon icon={faShoppingCart}/>{this.props.cart.length} */}
                     <IconButton aria-label="Cart">
-                      <StyledBadge badgeContent={this.state.cart} color="primary">
+                      <StyledBadge badgeContent={this.props.cart.length} color="primary">
                         <ShoppingCartIcon style={{color:"white"}} />
                       </StyledBadge>
                     </IconButton>

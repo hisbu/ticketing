@@ -450,7 +450,9 @@ body{
   border: '2px solid white';
 }
 
-
+.modalSize{
+  width: 600px;
+}
 
 /*=====PAGE NOT FOUND */
 #notfound {

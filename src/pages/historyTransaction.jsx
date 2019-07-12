@@ -1,9 +1,10 @@
 import React from 'react'
-import {Collapse, Button, CardBody, Card, Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap'
+import {Button, Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap'
 import {Paper, Table, TableBody,TableHead, TableCell, TableRow, TableFooter} from '@material-ui/core'
 import { connect} from 'react-redux'
 import { ApiUrl} from './../support/urlApi'
 import Axios from 'axios';
+import Numeral from 'numeral'
 class History extends React.Component{
     state={
         dataTransaksi:null,
@@ -52,7 +53,7 @@ class History extends React.Component{
                     <TableCell>{i+1}</TableCell>
                     <TableCell>{val.tgl}</TableCell>
                     <TableCell>{qty}</TableCell>
-                    <TableCell>{total}</TableCell>
+                    <TableCell>Rp. {Numeral(total).format(0,0)}</TableCell>
                     <TableCell><Button color='primary' onClick={()=>this.renderDetail(i)}>Detail</Button></TableCell>
                 </TableRow>
             )
@@ -91,7 +92,7 @@ class History extends React.Component{
         // var data = this.state.dataTransaksi[index].items
         return(
         <Modal isOpen={this.state.modal} toggle={this.closeModal}>
-          <ModalHeader toggle={this.toggle}>Detail Transaction - {this.state.dataTransaksi[id].tgl}</ModalHeader>
+          <ModalHeader >Detail Transaction - {this.state.dataTransaksi[id].tgl}</ModalHeader>
           <ModalBody>
             <Table>
                 <TableHead>
@@ -110,7 +111,7 @@ class History extends React.Component{
                                         <TableCell>{i+1}</TableCell>
                                         <TableCell>{val.title}</TableCell>
                                         <TableCell>{val.qty}</TableCell>
-                                        <TableCell>{val.total}</TableCell>
+                                        <TableCell>Rp. {Numeral(val.total).format(0,0)}</TableCell>
                                     </TableRow>
                             )
                         })

@@ -9,6 +9,7 @@ import { connect } from 'react-redux'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCartPlus} from '@fortawesome/free-solid-svg-icons'
 import { Redirect} from 'react-router-dom'
+import { OnRegisterSuccess} from './../redux/actions'
 
 class Reservation extends React.Component{
     state={
@@ -156,6 +157,13 @@ class Reservation extends React.Component{
                     alert('Tiket berhasil dimasukan kedalam keranjang')
                     this.setState({booked: [...this.state.booked, ...this.state.chosen], chosen:[]})
                     this.setState({cart: true})
+                    Axios.get(ApiUrl+'/user/'+ this.props.id)
+                    .then((res)=>{
+                        this.props.OnRegisterSuccess(res.data[0])
+                    })
+                    .catch((err)=>{
+                        console.log(err)
+                    })
                 })
             })
             .catch((err)=>{
@@ -235,4 +243,4 @@ const mapStateToProps=( state )=>{
     }
 }
 
-export default connect(mapStateToProps) (Reservation);
+export default connect(mapStateToProps, {OnRegisterSuccess} ) (Reservation);

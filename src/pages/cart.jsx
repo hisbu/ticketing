@@ -8,6 +8,7 @@ import Axios from 'axios';
 import {ApiUrl} from './../support/urlApi'
 import { Spinner } from 'reactstrap';
 import { Redirect } from 'react-router-dom'
+import Numeral from 'numeral'
 class CartPage extends React.Component{
     state={
         totalBayar:0,
@@ -105,7 +106,7 @@ class CartPage extends React.Component{
                     <TableCell>{i+1}</TableCell>
                     <TableCell>{val.title}</TableCell>
                     <TableCell>{val.qty}</TableCell>
-                    <TableCell>{val.total}</TableCell>
+                    <TableCell>Rp. {Numeral(val.total).format(0,0)}</TableCell>
                 </TableRow>
                 )
         })
@@ -179,9 +180,9 @@ class CartPage extends React.Component{
                         <TableBody>
                             {this.printData()}
                         </TableBody>
-                        <TableFooter>
-                            <TableCell colSpan='3' align='right'>Total</TableCell>
-                            <TableCell>Rp. {this.state.totalBayar}</TableCell>
+                        <TableFooter >
+                            <TableCell colSpan='3' align='right' style={{fontSize:'18px', fontStyle:'bold'}}>Total</TableCell>
+                            <TableCell style={{fontSize:'18px', fontStyle:'bold'}}>Rp. {Numeral(this.state.totalBayar).format(0,0)}</TableCell>
                         </TableFooter>
                     </Table>
                 </Paper>
