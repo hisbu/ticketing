@@ -20,6 +20,7 @@ import WatchList from './pages/watchList'
 import Cart from './pages/cart'
 import CheckOut from './pages/checkout'
 import History from './pages/historyTransaction'
+import Test from './pages/test'
 
 class App extends React.Component {
 
@@ -58,6 +59,7 @@ class App extends React.Component {
           <Route path='/cart' component={Cart}/>
           <Route path='/checkout' component={CheckOut}/>
           <Route path='/history' component={History}/>
+          <Route path='/test' component={Test}/>
           <Route path='*' component={NotFount}/>
         </Switch>
         

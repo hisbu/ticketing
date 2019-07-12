@@ -106,7 +106,7 @@ class Example extends React.Component {
                 </DropdownToggle>
                 <DropdownMenu right>
                   <DropdownItem>
-                    Option 1
+                    <Link to={{pathname:'/history', state:this.props.id}}> History Transaksi</Link>
                   </DropdownItem>
                   <DropdownItem>
                     Option 2
@@ -136,7 +136,8 @@ const mapStateToProps = (state) =>{
   return{
     name : state.user.username,
     role : state.user.role,
-    cart : state.user.cart
+    cart : state.user.cart,
+    id : state.user.id
   }
 }
 export default connect(mapStateToProps, {onLogout}) (Example);
